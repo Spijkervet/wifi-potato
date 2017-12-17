@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+<!-- HEAD css / scripts -->
+{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <div style="padding-top:10%">
+        <div class="jumbotron">
+            <h1 class="display-3">Hello, world!</h1>
+            <p class="lead"><a href="http://getbootstrap.com">Bootstrap 4 Boilerplate</a></p>
+            <hr class="my-4">
+            <div>
+                <b>Your e-mail: {{ user.email }}</b>
+                <br>
+                <i>Project: {{ app_info.name }}</i>
+                <p>
+                    <div id="time"></div>
+                    <div id="version"></div>
+                </p>
+            </div>
+        </div>
+
+        <div id="graph_container"></div>
+    </div>
+</div>
+
+<!-- BODY css / scripts -->
+{% endblock %}
