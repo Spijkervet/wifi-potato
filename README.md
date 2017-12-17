@@ -1,4 +1,4 @@
-Flask SocketIO Bootstrap 4 Boilerplate for Python 3
+WiFi Potato
 ==============
 
-Boilerplate Flask webserver with integrated Socket.IO and Bootstrap 4.
+Wireless auditing platform written in Python 3.
