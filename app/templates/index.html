@@ -5,27 +5,64 @@
 {% endblock %}
 {% block content %}
 
+<div class="row">
 
-<div class="container">
-    <div style="padding-top:10%">
-        <div class="jumbotron">
-            <h1 class="display-3">Hello, world!</h1>
-            <p class="lead"><a href="http://getbootstrap.com">Bootstrap 4 Boilerplate</a></p>
-            <hr class="my-4">
-            <div>
-                <b>Your e-mail: {{ user.email }}</b>
-                <br>
-                <i>Project: {{ app_info.name }}</i>
-                <p>
-                    <div id="time"></div>
-                    <div id="version"></div>
-                </p>
-            </div>
-        </div>
-
-        <div id="graph_container"></div>
+  <div class="col-3">
+    <div class="card">
+      <div id="numOfClients" class="card-header text-center h3">0</div>
+      <div class="card-block text-center">Clients connected</div>
     </div>
+  </div>
+
+
+  <div class="col-3">
+    <div class="card">
+      <div class="card-header text-center h3"><div id="time"></div></div>
+      <div class="card-block text-center">Uptime</div>
+    </div>
+  </div>
+
+  <div class="col-3">
+    <div class="card">
+      <div class="card-header text-center h3">{{ app_info.ssid }}</div>
+      <div class="card-block text-center">SSID</div>
+    </div>
+  </div>
+
+  <div class="col-3">
+    <div class="card">
+      <div class="card-header text-center h3">{{ app_info.active_interface }}</div>
+      <div class="card-block text-center">Sniffing interface</div>
+    </div>
+  </div>
+
 </div>
 
+<table id="clientsTable" class="table">
+  <thead>
+    <tr>
+      <th>MAC</th>
+      <th>Vendor</th>
+      <th>Connection Time</th>
+      <th>RX</th>
+      <th>TX</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+
+<div id="graph_container"></div>
+
+
+<script>
+
+window.onload = function() {
+
+  graph = create_graph();
+}
+
+</script>
 <!-- BODY css / scripts -->
 {% endblock %}

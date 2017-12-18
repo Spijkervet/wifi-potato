@@ -1,12 +1,14 @@
 import os
 from flask import Flask
 from flask_socketio import SocketIO
-from .info import Info
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from celery import Celery
 
+from .info import Info
+from .services import Services
+from .config import Config
 
 def make_celery(app):
     celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'],
@@ -21,36 +23,36 @@ def make_celery(app):
     celery.Task = ContextTask
     return celery
 
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "database.db")
-
 __version__ = '1.0.0'
 
 app_info = Info()
+services = Services()
+config = Config()
 socketio = SocketIO()
 db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 
-app = Flask(__name__)
+def create_app(DB_PATH):
+    app = Flask(__name__)
 
-app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379'
-app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379'
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + DB_PATH
-app.config['SECRET_KEY'] = 'Aqewur381!%*'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379'
+    app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379'
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + DB_PATH
+    app.config['SECRET_KEY'] = 'Aqewur381!%*'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-from . import events
+    from . import events
 
-from .views.index import index_bp
-from .views.login import login_bp
-app.register_blueprint(index_bp)
-app.register_blueprint(login_bp)
+    from .views.index import index_bp
+    from .views.login import login_bp
+    app.register_blueprint(index_bp)
+    app.register_blueprint(login_bp)
 
-socketio.init_app(app)
-db.init_app(app)
-login_manager.init_app(app)
-bcrypt.init_app(app)
+    socketio.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
+    bcrypt.init_app(app)
 
-celery = make_celery(app)
+    celery = make_celery(app)
+    return app

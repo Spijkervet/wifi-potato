@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block title %}Settings{% endblock %}
+{% block head %}
+<!-- HEAD css / scripts -->
+{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col">
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+            Wireless Interfaces
+          </a>
+        </div>
+        <div id="collapseOne" class="collapse show">
+          <div class="card-body card-form">
+
+            <form id="InterfaceForm" method="POST">
+              {{ interface_form.hidden_tag() }}
+              <div class="form-group row">
+                {{ interface_form.sniff_iface.label(class="col-2 col-form-label") }}
+                {{ interface_form.sniff_iface(class="col-10 form-control") }}
+              </div>
+              <div class="form-group row">
+                {{ interface_form.ap_iface.label(class="col-2 col-form-label") }}
+                {{ interface_form.ap_iface(class="col-10 form-control") }}
+              </div>
+              {{ interface_form.submit(class="col-4 col-md-2 btn btn-md btn-primary btn-block") }}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col">
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+            Access Point
+          </a>
+        </div>
+        <div id="collapseTwo" class="collapse show">
+          <div class="card-body card-form">
+
+            <form id="APForm" method="POST">
+              {{ ap_form.hidden_tag() }}
+              <div class="form-group row">
+                {{ ap_form.ssid.label(class="col-2 col-form-label") }}
+                {{ ap_form.ssid(class="col-10 form-control") }}
+              </div>
+              <div class="form-group row">
+                {{ ap_form.password.label(class="col-2 col-form-label") }}
+                {{ ap_form.password(class="col-10 form-control") }}
+              </div>
+              <div class="form-group row">
+                {{ ap_form.channel.label(class="col-2 col-form-label") }}
+                {{ ap_form.channel(class="col-10 form-control") }}
+              </div>
+                {{ ap_form.submit(class="col-4 col-md-2 btn btn-md btn-primary btn-block") }}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- BODY css / scripts -->
+{% endblock %}

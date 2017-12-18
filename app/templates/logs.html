@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}Logs{% endblock %}
+{% block head %}
+<!-- HEAD css / scripts -->
+{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col">
+
+    <div id="log">
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+
+window.onload = function() {
+  var socket = io.connect('http://' + document.domain + ':' + location.port);
+  socket.emit('checkLogFile');
+
+  socket.on('updateLogFile', function(response) {
+    console.log("UPDATING");
+    updateLogFile(JSON.parse(response));
+  });
+
+};
+
+function updateLogFile(json) {
+  text = JSON.stringify(json.text, null,'\t').replace(/\n/g,'<br/>');
+  $("#log").html(text.replace("/\n", ""));
+  socket.emit('checkLogFile');
+}
+</script>
+
+<!-- BODY css / scripts -->
+{% endblock %}
